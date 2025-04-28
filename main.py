@@ -104,7 +104,16 @@ def run(playwright: Playwright) -> None:
                 # Wait for navigation after login
                 page.wait_for_load_state("networkidle", timeout=30000)
                 print("Login completed and page loaded")
-                
+                try:
+                   page.wait_for_url("**/workspace/**", timeout=10000)
+                   current_url = page.url
+                   if re.match(r"https://deepnote.com/workspace/.*", current_url):
+                     print("login successful, redirected to workspace")
+                     ookie_login_successful = True
+                   else:
+                     print("login may have failed, URL didn't change to workspace")
+                except TimeoutError:
+                   print("login may have failed, URL didn't change to workspace")
                 # Save cookies after successful login
                 cookies = context.cookies()
                 with open(cookie_file, "w") as f:
@@ -119,9 +128,9 @@ def run(playwright: Playwright) -> None:
             try:
                 page.goto(url)
                 page.wait_for_load_state("domcontentloaded", timeout=30000)
-                print(f"Navigated to {url}")
+                print(f"Navigated to deepnode-url")
             except TimeoutError:
-                print(f"Timeout when navigating to {url}, but continuing execution")
+                print(f"Timeout when navigating to deepnode-url, but continuing execution")
         
         # Click "Run" button if available
         try:
@@ -130,7 +139,7 @@ def run(playwright: Playwright) -> None:
             run_button.click()
             print("Clicked 'Run' button")
         except TimeoutError:
-            print("'Run' button not found, app maybe stop")
+            print("'Run' button not found, app maybe is Running")
         
         # Look for any text that starts with "Running"
         time.sleep(10)
@@ -142,7 +151,7 @@ def run(playwright: Playwright) -> None:
             print(f"Found running status: '{found_text}'")
             print("app is Running")
         except TimeoutError:
-            print("app is not Running - no text starting with 'Running' found")
+            print("app is not Running")
     
     finally:
         # Always close browser
