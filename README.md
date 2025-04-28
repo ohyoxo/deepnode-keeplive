@@ -12,8 +12,6 @@
 
 2、github的aciton
 
-3、 Docker运行：daxia2023/deepnode
+3、 Docker运行
 
-增加 NEZHA_SERVER NEZHA_KEY 
-
-特别提醒，Docker运行至少需要1G内存
+特别提醒，Docker运行至少需要512m内存
