@@ -14,4 +14,4 @@
 
 3、 Docker运行
 
-特别提醒，Docker运行至少需要512m内存
+特别提醒，Docker运行最好0.2cpu,1G内存
