@@ -18,7 +18,7 @@ def run(playwright: Playwright) -> None:
         print("Warning: DEEP_URL environment variable not set. Will not navigate after login.")
     
     # Launch browser
-    browser = playwright.firefox.launch(headless=False)
+    browser = playwright.firefox.launch(headless=True)
     context = browser.new_context()
     page = context.new_page()
     
